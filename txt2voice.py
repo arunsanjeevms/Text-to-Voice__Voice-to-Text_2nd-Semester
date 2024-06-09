@@ -22,6 +22,23 @@ def text_to_speech():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
+def play_audio():
+    mytext = text_entry.get("1.0", "end-1c")
+    language = languages[language_var.get()]
+    slow = speed_var.get()
+    
+    if not mytext.strip():
+        messagebox.showwarning("Input Error", "Please enter some text.")
+        return
+
+    try:
+        myobj = gTTS(text=mytext, lang=language, slow=slow)
+        file_path = "temp_audio.mp3"
+        myobj.save(file_path)
+        os.system(f"start {file_path}")
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
 def set_defaults():
     text_entry.delete("1.0", "end")
     text_entry.insert("end", "Enter text here...")
@@ -46,10 +63,20 @@ root.configure(bg="#2c3e50")
 # Font settings
 font_name = "Lemon Milk"
 font_bold = "Lemon Milk Bold"
-times="Montserrat"
+times = "Montserrat"
+
+# Top Labels
+top_label1 = tk.Label(root, text="M KUMARASAMY COLLEGE OF ENGINEERING - KARUR", font=(font_bold, 18), bg="#2c3e50", fg="white")
+top_label1.pack(pady=5)
+
+top_label2 = tk.Label(root, text="PYTHON END SEMESTER PROJECT", font=(font_bold, 17), bg="#2c3e50", fg="white")
+top_label2.pack(pady=5)
+
+top_label3 = tk.Label(root, text="M S ARUN SANJEEV", font=(font_name, 16), bg="#2c3e50", fg="white")
+top_label3.pack(pady=5)
 
 # Registration Number Label
-reg_label = tk.Label(root, text="Reg No: 927623BCS011", font=(font_bold, 12), bg="#2c3e50", fg="white")
+reg_label = tk.Label(root, text="Reg No: 927623BCS011", font=(font_name, 16), bg="#2c3e50", fg="white")
 reg_label.pack(pady=5)
 
 # Title Label
@@ -57,7 +84,7 @@ title_label = tk.Label(root, text="Text to Voice Converter", font=(font_bold, 20
 title_label.pack(pady=10, fill=tk.X)
 
 # Text Entry Widget
-text_entry = tk.Text(root, wrap="word", font=(times, 12), height=10, width=40,fg="grey")
+text_entry = tk.Text(root, wrap="word", font=(times, 12), height=5, width=150, fg="grey")
 text_entry.pack(pady=10, padx=10)
 text_entry.insert("end", "Enter text here...")
 
@@ -74,8 +101,12 @@ speed_var = tk.BooleanVar()
 speed_check = tk.Checkbutton(root, text="Slow Speed", variable=speed_var, font=(font_name, 12), bg="#2c3e50", fg="white")
 speed_check.pack(pady=5)
 
+# Play Button
+play_button = tk.Button(root, text="Play", command=play_audio, font=(font_bold, 12), bg="#3498db", fg="white", width=10)
+play_button.pack(pady=5)
+
 # Start Button
-convert_button = tk.Button(root, text="START", command=text_to_speech, font=(font_bold, 14), bg="#27ae60", fg="white", width=15, height=2)
+convert_button = tk.Button(root, text="SAVE", command=text_to_speech, font=(font_bold, 14), bg="#27ae60", fg="white", width=15, height=2)
 convert_button.pack(pady=20)
 
 # Reset Button
